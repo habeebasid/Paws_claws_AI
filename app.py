@@ -14,7 +14,8 @@ st.set_page_config(
 )
 
 # ── Custom CSS ────────────────────────────────────────────────────────────────
-st.markdown("""
+st.markdown(
+    """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -288,7 +289,9 @@ html, body, [data-testid="stAppViewContainer"] {
     padding-top: 1px;
 }
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 
 # ── Load model ────────────────────────────────────────────────────────────────
@@ -296,10 +299,16 @@ html, body, [data-testid="stAppViewContainer"] {
 def load_model():
     try:
         import tensorflow as tf
-        model = tf.keras.models.load_model("cats_vs_dogs_model.keras")
+
+        model = tf.keras.models.load_model(
+            "/Users/habiba/CNN/models/cats_vs_dogs_model.keras"
+        )
         return model, None
     except FileNotFoundError:
-        return None, "Model file **cats_vs_dogs_model.keras** not found. Make sure it's in the same folder as app.py."
+        return (
+            None,
+            "Model file **cats_vs_dogs_model.keras** not found. Make sure it's in the same folder as app.py.",
+        )
     except Exception as e:
         return None, str(e)
 
@@ -333,7 +342,8 @@ import random
 
 
 # ── Hero ──────────────────────────────────────────────────────────────────────
-st.markdown("""
+st.markdown(
+    """
 <div style="text-align:center; padding: 3.5rem 0 2rem; width:100%;">
   <div style="font-size:1.6rem; letter-spacing:0.3rem; margin-bottom:0.5rem;">🐾</div>
   <div style="font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; color:#ff8c32; margin-bottom:1rem;">Deep Learning · Computer Vision</div>
@@ -341,7 +351,9 @@ st.markdown("""
   <p style="font-size:1.05rem; font-weight:300; color:#9e9a93; max-width:420px; margin:0 auto 2rem auto; line-height:1.7; text-align:center; display:block;">Drop a photo. Our convolutional neural network will tell you who's really in charge.</p>
   <span style="font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:#ff8c32; display:block; text-align:center;">↓ Upload an image below</span>
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 
 # ── Load model ────────────────────────────────────────────────────────────────
@@ -349,7 +361,9 @@ model, model_err = load_model()
 
 if model_err:
     st.error(f"⚠️ {model_err}")
-    st.info("Train your model first and save it with `model.save('cats_vs_dogs_model.keras')`")
+    st.info(
+        "Train your model first and save it with `model.save('cats_vs_dogs_model.keras')`"
+    )
     st.stop()
 
 
@@ -362,14 +376,17 @@ uploaded = st.file_uploader(
 
 if uploaded is None:
     # How it works
-    st.markdown("""
+    st.markdown(
+        """
     <div class="how-card">
       <div class="how-title">How it works</div>
       <div class="how-step"><span class="how-num">1</span><span>Upload any photo of a cat or a dog — clear shots work best.</span></div>
       <div class="how-step"><span class="how-num">2</span><span>Our 4-layer CNN preprocesses the image to 150×150 and runs inference.</span></div>
       <div class="how-step"><span class="how-num">3</span><span>You get the verdict, confidence score, and a little flavour text.</span></div>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 else:
     image = Image.open(uploaded).convert("RGB")
@@ -377,10 +394,12 @@ else:
     # Show image
     st.markdown('<div class="img-frame">', unsafe_allow_html=True)
     st.image(image, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # Scanning animation
-    st.markdown('<div class="scan-text">🔬 Analysing image…</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="scan-text">🔬 Analysing image…</div>', unsafe_allow_html=True
+    )
     bar = st.progress(0)
     for i in range(1, 101):
         time.sleep(0.008)
@@ -397,7 +416,8 @@ else:
     blurb = random.choice(DOG_LINES if is_dog else CAT_LINES)
     bar_color = "dog" if is_dog else "cat"
 
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div class="result-card {kind}">
         <span class="result-emoji">{emoji}</span>
         <div class="result-label">{label}</div>
@@ -408,11 +428,14 @@ else:
         <div class="conf-pct">{pct} / 100</div>
         <div class="verdict-blurb">"{blurb}"</div>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # Stats pills
     w, h = image.size
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div class="stats-row">
         <div class="stat-pill">
             <div class="stat-num">{w}×{h}</div>
@@ -431,7 +454,9 @@ else:
             <div class="stat-lbl">Conv Layers</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
     # Try again
     st.markdown("<br>", unsafe_allow_html=True)
@@ -440,8 +465,11 @@ else:
 
 
 # ── Footer ────────────────────────────────────────────────────────────────────
-st.markdown("""
+st.markdown(
+    """
 <div class="footer">
     Built with TensorFlow · Keras · Streamlit &nbsp;·&nbsp; CNN trained on Kaggle Dogs vs Cats
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
