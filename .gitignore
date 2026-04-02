@@ -5,8 +5,10 @@ saved_model/
 
 # Dataset
 Dataset/
-data/
-*.zip
+catsvsdogs/
+test/
+train/
+
 
 # Virtual environment
 ds-env/
