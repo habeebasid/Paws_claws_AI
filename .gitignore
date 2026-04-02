@@ -32,3 +32,5 @@ kaggle.json
 
 # Streamlit
 .streamlit/secrets.toml
+.venv/
+.vscode/
