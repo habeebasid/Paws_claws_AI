@@ -6,40 +6,36 @@ A deep learning web app that classifies images as **cats or dogs** using a Convo
 
 ## ✨ Live Demo
 
-> 🔗 **[Try it on Streamlit Cloud](https://your-app-link.streamlit.app)** ← replace after deploying
+🔗 **[pawsandclaws.streamlit.app](https://pawsandclaws.streamlit.app/)**
 
 ---
 
-## 📸 Preview
+## 📸 App Preview
 
-| Upload | Result |
-|--------|--------|
-| Drop any cat or dog photo | Get an instant prediction with confidence score |
+![Paws & Claws AI Screenshot](assets/app_screenshot.png)
 
 ---
 
 ## 🧠 Model Architecture
 
-Built from scratch using a 4-block CNN:
+Built from scratch using a 4-block CNN trained on the Kaggle Dogs vs Cats dataset.
 
-```
-Input (150×150×3)
-   ↓
-Conv2D(32) → MaxPooling
-   ↓
-Conv2D(64) → MaxPooling
-   ↓
-Conv2D(128) → MaxPooling
-   ↓
-Conv2D(128) → MaxPooling
-   ↓
-Flatten → Dense(512) → Dense(1, sigmoid)
-```
+![CNN Architecture](assets/architecture.png)
+
+| Layer | Output Shape |
+|---|---|
+| Input | (None, 150, 150, 3) |
+| Conv2D + MaxPooling | (None, 74, 74, 32) |
+| Conv2D + MaxPooling | (None, 36, 36, 64) |
+| Conv2D + MaxPooling | (None, 17, 17, 128) |
+| Conv2D + MaxPooling | (None, 7, 7, 128) |
+| Flatten | (None, 6272) |
+| Dense(512) | (None, 512) |
+| Dense(1, sigmoid) | (None, 1) |
 
 - **Loss:** Binary Crossentropy  
 - **Optimizer:** Adam  
 - **Output:** 0 = Cat, 1 = Dog  
-- **Input size:** 150 × 150 pixels  
 - **Dataset:** [Kaggle Dogs vs Cats](https://www.kaggle.com/datasets/salader/dogsvscats)
 
 ---
@@ -48,9 +44,13 @@ Flatten → Dense(512) → Dense(1, sigmoid)
 
 ```
 CNN/
-├── app.py                      # Streamlit app
-├── Cats_vs_Dogs.ipynb          # Training notebook
-├── cats_vs_dogs_model.keras    # Saved model (not in git)
+├── assets/
+│   ├── app_screenshot.png
+│   └── architecture.png
+├── models/
+│   └── cats_vs_dogs_model.keras
+├── app.py
+├── Cats_vs_Dogs.ipynb
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -62,15 +62,14 @@ CNN/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/YOUR_USERNAME/cats-vs-dogs.git
-cd cats-vs-dogs
+git clone https://github.com/habeebasid/paws_claws_ai.git
+cd paws_claws_ai
 ```
 
 ### 2. Create and activate a virtual environment
 ```bash
 python3 -m venv ds-env
-source ds-env/bin/activate        # Mac/Linux
-ds-env\Scripts\activate           # Windows
+source ds-env/bin/activate
 ```
 
 ### 3. Install dependencies
@@ -78,23 +77,10 @@ ds-env\Scripts\activate           # Windows
 pip install -r requirements.txt
 ```
 
-### 4. Add your trained model
-Train the model by running all cells in `Cats_vs_Dogs.ipynb`, then make sure `cats_vs_dogs_model.keras` is in the root folder.
-
-### 5. Launch the app
+### 4. Launch the app
 ```bash
 streamlit run app.py
 ```
-
----
-
-## ☁️ Deploy on Streamlit Cloud
-
-1. Push this repo to GitHub (without the `.keras` model file — it's too large)
-2. Host the model on **Google Drive** or **Hugging Face Hub**
-3. Add a download snippet at the top of `app.py` to fetch it at runtime
-4. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → connect your repo
-5. Set **Main file path** to `app.py` → Deploy
 
 ---
 
@@ -106,7 +92,6 @@ streamlit run app.py
 | Streamlit | Web app interface |
 | Pillow | Image preprocessing |
 | scikit-learn | Evaluation metrics |
-| Kaggle API | Dataset download |
 | OpenCV | Image utilities |
 
 ---
@@ -126,7 +111,7 @@ streamlit run app.py
 ## 🙋‍♀️ Author
 
 **Habiba**  
-Built as a hands-on CNN project — trained on MacBook, deployed on the cloud.
+Built as a hands-on CNN project — trained on MacBook, deployed on Streamlit Cloud.
 
 ---
 
