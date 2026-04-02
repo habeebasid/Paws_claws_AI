@@ -300,9 +300,7 @@ def load_model():
     try:
         import tensorflow as tf
 
-        model = tf.keras.models.load_model(
-            "/Users/habiba/CNN/models/cats_vs_dogs_model.keras"
-        )
+        model = tf.keras.models.load_model("models/cats_vs_dogs_model.keras")
         return model, None
     except FileNotFoundError:
         return (
