@@ -296,10 +296,11 @@ html, body, [data-testid="stAppViewContainer"] {
 def load_model():
     try:
         import tensorflow as tf
-        model = tf.keras.models.load_model("cats_vs_dogs_model.keras")
-        return model, None
-    except FileNotFoundError:
-        return None, "Model file **cats_vs_dogs_model.keras** not found. Make sure it's in the same folder as app.py."
+        import os
+        for path in ["models/cats_vs_dogs_model.keras", "cats_vs_dogs_model.keras"]:
+            if os.path.exists(path):
+                return tf.keras.models.load_model(path), None
+        return None, "Model file not found. Make sure **cats_vs_dogs_model.keras** is in the `models/` folder."
     except Exception as e:
         return None, str(e)
 
